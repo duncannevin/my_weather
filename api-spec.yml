@@ -1,0 +1,108 @@
+openapi: 3.0.0
+info:
+  title: My Weather Application API
+  description: This is the API documentation for My Weather Application.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+    description: Local development server
+
+paths:
+  /weather/forecast:
+    get:
+      summary: Retrieve the weather forecast based on query parameters.
+      operationId: getWeatherForecast
+      parameters:
+        - name: lat
+          in: query
+          required: true
+          description: Latitude for the forecast.
+          schema:
+            type: number
+            format: float
+        - name: lon
+          in: query
+          required: true
+          description: Longitude for the forecast.
+          schema:
+            type: number
+            format: float
+        - name: units
+          in: query
+          required: true
+          description: Units of measurement. Either 'imperial' or 'metric'.
+          schema:
+            type: string
+        - name: cnt
+          in: query
+          required: true
+          description: Number of forecast days.
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Successful response with the weather forecast.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  location:
+                    type: string
+                  forecasts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          type: string
+                          format: date
+                        temperature:
+                          type: string
+                        condition:
+                          type: string
+        '400':
+          description: Invalid request parameters.
+        '500':
+          description: Internal server error.
+  /weather:
+    post:
+      summary: Submit weather data for processing.
+      operationId: postWeatherData
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                lat:
+                  type: number
+                  description: Latitude for the weather data.
+                lon:
+                  type: number
+                  description: Longitude for the weather data.
+                units:
+                  type: string
+                  description: Units of measurement. Either 'imperial' or 'metric'.
+              example:
+                lat: 38.58252615935333
+                lon: -121.53088855581495
+                units: "imperial"
+      responses:
+        '200':
+          description: Successful response with weather processing result.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+        '400':
+          description: Invalid request body.
+        '500':
+          description: Internal server error.
