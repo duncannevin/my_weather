@@ -19,9 +19,9 @@ pip install --upgrade pip
 pip install virtualenv
 
 # --- 2. Clone FastAPI Repo ---
-cd /home/ec2-user
-git clone https://github.com/duncannevin/my_weather.git
-cd my_weather
+#cd /home/ec2-user
+#git clone https://github.com/duncannevin/my_weather.git
+#cd my_weather
 
 # Create virtual environment and install dependencies
 python -m virtualenv venv
